@@ -1,0 +1,75 @@
+\documentclass[11pt, a4paper]{memoir}
+
+
+\include{config}
+\include{acro}
+
+
+\title{\Huge Seis problemas básicos $\mathcal{NP}$-completos}
+
+\author{Ángel David Martín Rodríguez}
+\author{Víctor David Mayorca Luis}
+\author{Jesús Eduardo Plasencia Pimentel}
+
+\affil{Grado en Ingeniería Informática. Universidad de La Laguna}
+
+\begin{document}
+\maketitle
+
+\chapter{VERTEX COVER}
+
+\section{Problemas involucrados}
+
+\subsection*{\gls{3sat}}
+
+\noindent ENTRADA: Un conjunto de cláusulas $C=\left \{c_1, c_2, \dots, c_m \right \}$ sobre un conjunto finito $U$ de variables tal que $|c_i|=3$, para $1\le i \le m$.
+
+\noindent PREGUNTA: ¿Existe una asignación booleana para $U$, tal que satisfaga todas las cláusulas de $C$? 
+
+\subsection*{\gls{vc}}
+
+\noindent ENTRADA: Un grafo $G = (V,E)$ y un entero positivo $K < |V|$.
+
+\noindent PREGUNTA: ¿Existe un recubrimiento de vértices de tamaño $K$ o menos para $G$, esto es, un subcojunto $V' \subseteq V$ tal que $|V'|\le K$ y, por cada eje $\{u,v\} \in E$, al menos uno de $u$ y $v$ pertenezcan a $V$?
+
+\section{Demostración de NP-completitud}
+
+\begin{thm}
+	\gls{vc} es $\mathcal{NP}$-completo.
+\end{thm}
+
+\begin{proof}
+
+Es fácil comprobar que \gls{vc}	$\in \mathcal{NP}$, ya que se puede encontrar una algoritmo para una \gls{ndtm} que reconozca el lenguaje $L(\mbox{VC},e)$, para un esquema de codificación $e$, en un número de pasos acotado por una función polinomial.
+
+Sea $U=\{u_1,u_2,\ldots,u_n\}$ y $C=\left \{c_1, c_2, \dots, c_m \right \}$ una instancia de 3SAT. Debemos construir un grafo $G=(V,E)$ y un entero positivo $K \le |V|$ tal que $G$ posee un recubrimiento de vertices de tamaño $K$ o menos si y solo si C es satisfactible.
+
+Para cada variable $u_i \in U$ hay un componente asignador $T_i=(V_i,E_i)$ con $V_i=\{u_i, \bar{u_i}\}$ y $E_i=\{\{u_i, \bar{u_i}\}\}$, esto es, dos vertices unidos por un solo eje. Se debe notar que cualquier recubrimiento de vértices debe de contener por lo menos uno de $u_i$ o $\bar{u_i}$ a manera de recubrir el único eje en $E_i$.
+
+Para cada cláusula $c_j \in C$ hay un componente de prueba de satisfacción $S_j=(V'_J,E'_j)$, que consiste de tres nodos y tres aristas que unen los nodos a manera de triángulo.
+\[V'_j=\{a_1[j],a_2[j],a_3[j]\}\]
+\[E'_j=\{\{a_1[j],a_2[j]\},\{a_1[j],a_3[j]\},\{a_2[j],a_3[j]\}\}\]
+Se debe notar que cualquier recubrimiento de vértices debe contener como mínimo dos v'ertices de $V'_j$ de manera de cubrir todos las aristas en $E'_j$.
+
+La única parte de la construcción que depende de qué literales aparecen en que cláusulas en las colección de aristas de comunicación. Para cada cláusula $c_j\in C$ sean los tres literales en $c_j$ denotados como $x_j$, $y_j$ y $z_j$. Entonces los ejes de comunicación que parten de $S_j$ están dados por:
+\[E''_j=\{ \{a_1[j],x_j\}, \{a_2[j],y_j\}, \{a_3[j],z_j\} \}\]
+
+La construcción de nuestra instancia de VC se completa fijando $K=n+2m$ y $G=(V,E)$ donde
+\[V=(\bigcup^n_{i=1}V_i)\cup (\bigcup^m_{j=1}V'_j)\]
+y
+\[E=(\bigcup^n_{i=1}E_i)\cup (\bigcup^m_{j=1}E'_j)\cup (\bigcup^m_{j=1}E''_j)\]
+
+Es trivial ver como la construcción es posible de ser realizada en tiempo polinomial. Solo resta demostrar que $C$ es satisfactible si y solo si $G$ posee un recubrimiento de vértices de como mucho tamaño $K$.
+
+Primero, supongamos que $V' \subseteq V$ es un recubrimiento de vértices para $G$ con $|V'| \le K$. Basado en lo dicho anteriormente $V'$ debe contener al menos un vértice de cada $T_i$ y al menos dos vértices de cada $S_j$. Podemos entonces utilizar la manera en la que V' intersacta cada componente de asignación para obtener una asignación boolena $t: U \rightarrow \{T,F\}$. Simplemente fijamos $t(u_i)=T$ si $u_i \in V'$ y $t(u_i) = F$ si $\bar{u_i}\in V'$
+
+Para ver que esta asignación booleana satisface cada una de las cláusulas $c_j \in C$, considera los tres ejes en $E''_j$. Solo dos de estos ejes pueden ser cubiertos con vértices de $V'_j \cap V'$, así que al menos uno de ellos debe estar cubierto por un vértices de algún $V_i$ que pertenece a $V'$. Pero esto implica que el literal correspondiente, ya sea $u_i$ o $\bar{u_i}$, de la cláusula $c_j$ es verdadero bajo la asignación boolena $t$ y por lo tanto la cláusula $c_j$ es satisfactible por $t$. Debido a que esto es cierto por cada $c_j \in C$, sigue que $t$ es una asignación satisfactoria para C.
+
+supongamos que $t: U \rightarrow {T,F}$ es una asignación satisfactoria para $C$. El recubrimiento de vértices correspondiente $V'$ incluye un vértice de cada $T_i$ y dos vértices de cada $S_j$. El vértice de $T_i$ en $V'$ es $u_i$ si $t(u_i)=T$ y es $\bar{u_i}$ si $t(u_i)=F$. Esto asegura que al menos uno de los tres ejes de cada conjunto $E''_j$ esté cubierto, puesto que $t$ satisface cada cláusula $c_j$. Por lo tanto necesitamos solo incluir en $V'$ los puntos finales de $S_j$ de los otros dos vértics en $E''_j$ (el cual puede o no estar cubierto por otros vértices de los componentes de asignación) y esto nos da el recubrimiento de vértices deseado.
+\end{proof}
+
+
+\clearpage
+\printglossary[type=\acronymtype]
+
+\end{document}
