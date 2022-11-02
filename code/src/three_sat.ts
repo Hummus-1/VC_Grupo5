@@ -1,10 +1,9 @@
-import { readFileSync } from "node:fs";
-import { Graph } from "./graph";
+import { readFileSync } from 'node:fs';
 
 export interface Literal {
   name: string;
   isNegated: boolean;
-};
+}
 
 export type Clause = Literal[];
 
@@ -22,10 +21,4 @@ export class ThreeSat {
 
     return new ThreeSat(threeSAT.literalNames, threeSAT.clauses);
   }
-
-  toVC() {
-    const graph = Graph.fromThreeSat(this);
-  }
 }
-
-
