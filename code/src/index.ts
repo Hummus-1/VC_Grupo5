@@ -31,7 +31,7 @@ let graph: VCData = {
   edges: []
 };
 
-for (const literal of threeSAT.literals) {
+for (const literal of threeSAT.literalNames) {
   graph.nodes.push([{literal, isNegated: true}, {literal, isNegated: false}]);
   graph.edges.push({from: literal.name() /* suponiendo clase literal*/, to: /*literal negado*/});
 }
@@ -47,7 +47,7 @@ for (let i = 0; i < threeSAT.clauses.length; ++i) {
     graph.edges.push({from: a, to: threeSAT.clauses[i].name()})
   }
 
-  // Crear triángulo, de nuevo molaría tener un método para dar nombre.
+  // Crear triángulo, de nuevo molaría tener un método para dar nombre automáticamente.
   graph.edges.push([
     {from: `a1${i}`, to: `a2${i}`},
     {from: `a1${i}`, to: `a3${i}`},
