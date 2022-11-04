@@ -1,4 +1,4 @@
-import * as vc from './vc_graph';
+import {} from './vc_graph';
 import * as vis from 'vis';
 // create an array with nodes
 

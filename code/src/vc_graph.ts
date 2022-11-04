@@ -1,4 +1,5 @@
-import { Literal, ThreeSat } from './three_sat';
+import type { Literal } from './three_sat';
+import { ThreeSat } from './three_sat';
 
 export interface Node {
   id: number;
