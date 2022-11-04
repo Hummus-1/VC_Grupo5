@@ -9,6 +9,7 @@ class VisGraph {
   }
 }
 
+// ESTO EN EL SCRIPT DE LA PAGINA
 // var container = document.getElementById("mynetwork");
 // var data = {
 //   nodes: nodes,
