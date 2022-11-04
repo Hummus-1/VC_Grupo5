@@ -1,27 +1,24 @@
 import { readFileSync } from 'node:fs';
 
-export interface Literal {
-  name: string;
-  isNegated: boolean;
-}
 
-export type Clause = Literal[];
+// export type Clause = Literal[];
 
-export interface ThreeSatData {
-  literalNames: string[];
-  clauses: Clause[];
-}
+// export interface ThreeSatData {
+//   literalNames: string[];
+//   clauses: Clause[];
+// }
 
-export interface Node {}
-export interface Edge {}
+// export interface Node {}
 
-export interface VCData {
-  nodes: Node[];
-  edges: Edge[];
-}
+// export interface Edge {}
 
-let json = readFileSync('./data/prueba.json', 'utf8');
-let threeSAT = JSON.parse(json) as ThreeSatData;
+// export interface VCData {
+//   nodes: Node[];
+//   edges: Edge[];
+// }
+
+const json = readFileSync('./data/prueba.json', 'utf8');
+const threeSAT = JSON.parse(json) as ThreeSatData;
 
 console.log(JSON.stringify(threeSAT, null, 2));
 

@@ -1,8 +1,8 @@
 {
   "root": true,
   "env": {
-      "es2021": true,
-      "node": true
+    "es2021": true,
+    "node": true
   },
   "extends": [
     "airbnb",
@@ -19,6 +19,6 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
+    "import/prefer-default-export": "off"
   }
 }
-

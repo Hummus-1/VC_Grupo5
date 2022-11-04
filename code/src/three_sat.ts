@@ -5,20 +5,20 @@ export interface Literal {
   isNegated: boolean;
 }
 
-export type Clause = Literal[];
+export type Clause = [Literal, Literal, Literal];
 
-export interface ThreeSatData {
+export interface ThreeSatJson {
   literalNames: string[];
   clauses: Clause[];
 }
 
 export class ThreeSat {
-  constructor(private literalsNames: string[], private clauses: Clause[]) {}
+  constructor(public literalsNames: string[], private clauses: Clause[]) {}
 
   static fromFile(path: string): ThreeSat {
     const json = readFileSync(path, 'utf8');
-    const threeSAT = JSON.parse(json) as ThreeSatData;
+    const input = JSON.parse(json) as ThreeSatJson;
 
-    return new ThreeSat(threeSAT.literalNames, threeSAT.clauses);
+    return new ThreeSat(input.literalNames, input.clauses);
   }
 }
