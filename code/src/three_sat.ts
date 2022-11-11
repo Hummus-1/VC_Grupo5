@@ -13,7 +13,7 @@ export interface ThreeSatJson {
 }
 
 export class ThreeSat {
-  constructor(public literalsNames: string[], private clauses: Clause[]) {}
+  constructor(public literalsNames: string[], public clauses: Clause[]) {}
 
   static fromFile(path: string): ThreeSat {
     const json = readFileSync(path, 'utf8');
