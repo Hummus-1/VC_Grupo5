@@ -12,5 +12,6 @@
     { "from": "Node 2", "to": "Node 4" },
     { "from": "Node 2", "to": "Node 5" },
     { "from": "Node 3", "to": "Node 3" }
-  ]
+  ],
+  "bound": 8
 }

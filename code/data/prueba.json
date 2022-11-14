@@ -2,14 +2,14 @@
   "literalNames": ["u1", "u2", "u3", "u4"],
   "clauses": [
     [
-      { "literal": "u1", "isNegated": false },
-      { "literal": "u3", "isNegated": true },
-      { "literal": "u4", "isNegated": true }
+      { "name": "u1", "isNegated": false },
+      { "name": "u3", "isNegated": true },
+      { "name": "u4", "isNegated": true }
     ],
     [
-      { "literal": "u1", "isNegated": true },
-      { "literal": "u2", "isNegated": false },
-      { "literal": "u4", "isNegated": false }
+      { "name": "u1", "isNegated": true },
+      { "name": "u2", "isNegated": false },
+      { "name": "u4", "isNegated": false }
     ]
   ]
 }

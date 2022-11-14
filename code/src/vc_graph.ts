@@ -1,3 +1,4 @@
+import type { Data as VisData } from 'vis-network';
 import type { Literal } from './three_sat';
 import { ThreeSat } from './three_sat';
 
@@ -15,6 +16,8 @@ const literalToString = (literal: Literal): string =>
   (literal.isNegated ? '~' : '') + literal.name;
 
 export class VCGraph {
+  private bound = 0;
+
   constructor(private nodes: Node[] = [], private edges: Edge[] = []) {}
 
   static fromThreeSat(threeSat: ThreeSat): VCGraph {
@@ -44,6 +47,8 @@ export class VCGraph {
       graph.addEdge(thirdAux, firstAux);
     });
 
+    graph.bound = threeSat.literalsNames.length + 2 * threeSat.clauses.length;
+
     return graph;
   }
 
@@ -51,11 +56,24 @@ export class VCGraph {
     return this.nodes[id];
   }
 
-  toVisNetwork(): { nodes: Node[]; edges: Edge[] } {
-    return { nodes: this.nodes, edges: this.edges };
-    //   nodes: this.nodes.map((node): Node => ({ id: node.id, label: 'a' })), // cambiar label a una string,
-    //   edges: this.edges,
-    // };
+  // toJSON(): string {
+  //   return JSON.stringify(this);
+  // }
+
+  toVisNetwork(): VisData {
+    const labelToId: Map<string, number> = new Map(
+      this.nodes.map((node, index) => [node.label, index])
+    );
+    const visNodes = [...labelToId].map(([label, id]) => ({
+      label,
+      id,
+    }));
+    const visEdges = this.edges.map((edge) => ({
+      from: labelToId.get(edge.from) ?? -1,
+      to: labelToId.get(edge.to) ?? -1,
+    }));
+
+    return { nodes: visNodes, edges: visEdges };
   }
 
   addNode(label: string) {

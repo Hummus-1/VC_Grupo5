@@ -13,7 +13,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-    "outDir": "build"
+    "outDir": "build",
+    "sourceMap": true
   },
   "include": ["**/*.ts", "**/*.tsx", "src/*"],
   "exclude": ["node_modules"]
